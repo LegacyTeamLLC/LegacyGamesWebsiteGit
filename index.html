@@ -1,180 +1,161 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta name="google-site-verification" content="XneUKc7HB5nrVPJvNPkDF06Nsw7-a6as22XREBnu1GI" />
-<style>
-@font-face {
-  font-family: 'Silkscreen';
-  src: url('Fonts/Silkscreen-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background: linear-gradient(to bottom, rgb(0, 4, 19), rgb(0, 32, 90)) no-repeat;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  color: white;
-  font-family: 'Silkscreen', sans-serif;
-}
-
-img {
-  max-width: 500px;
-  height: auto;
-  margin-top: 10px;
-  margin-bottom: 50px;
-}
-
-.header-img {
-  margin-bottom: 0;
-}
-
-.text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 48px;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-button.toggle-btn {
-  font-family: 'Silkscreen', sans-serif;
-  font-size: 20px;
-  background-color: #222;
-  color: white;
-  border: 2px solid white;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-button.toggle-btn:hover {
-  background-color: #444;
-}
-
-.modal-content {
-  opacity: 0;
-  transform: scale(0.8);
-  transition: all 0.3s ease;
-}
-
-/* Show Animation */
-.modal.show {
-  display: flex;
-}
-.modal.show .modal-content {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Hide Animation */
-.modal.hide .modal-content {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-/* Close Button */
-.close {
-  color: white;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.close:hover {
-  color: red;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CapuLegacy | LegacyGames</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="noise" aria-hidden="true"></div>
 
-<img src="unnamed (1).png" alt="SummerSaltStudios Logo">
-<img src="capulegacy01.png" alt="Header Image" class="header-img">
+  <header>
+    <div class="page nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span>
+        <span>CapuLegacy</span>
+      </a>
+      <nav>
+        <a class="active" href="index.html">Home</a>
+        <a href="player.html">Player Info</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-<div class="text">
-  Coming Soon...
-</div>
+  <div class="page">
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">LegacyGames presents</p>
+          <h1>CapuLegacy brings OG Capuchin energy back — rebuilt from scratch.</h1>
+          <p class="lead">A faithful Capuchin V1 remake with handcrafted assets, tuned physics, and neon-night vibes. Built for long-term community play without borrowed content.</p>
+          <div class="actions">
+            <a class="btn primary" href="player.html">PlayFab Player Lookup</a>
+            <a class="btn secondary" href="privacy.html">Privacy & Terms</a>
+          </div>
+        </div>
+        <img class="featured-image" src="capulegacy.png" alt="CapuLegacy promotional artwork">
+      </section>
 
-<button class="toggle-btn" onclick="openModal()">Show Privacy Policy</button>
+      <section>
+        <div class="section-header">
+          <h2>Why CapuLegacy feels right</h2>
+          <p>We rebuilt Capuchin V1 from the ground up, keeping the humor and movement, adding modern polish, and reinforcing fairness.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature">
+            <h3>Movement DNA</h3>
+            <p>Physics tuned with OG players to match Capuchin V1 muscle memory.</p>
+          </div>
+          <div class="feature">
+            <h3>Original artistry</h3>
+            <p>Every model, map, and sound comes from LegacyGames. Zero ripped content.</p>
+          </div>
+          <div class="feature">
+            <h3>Fresh layers</h3>
+            <p>Traversal toys, social hubs, and event beats keep play sessions fresh.</p>
+          </div>
+          <div class="feature">
+            <h3>Fair play</h3>
+            <p>PlayFab-backed anti-exploit tools, IP moderation, and server-side trust.</p>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat">
+            <small>Assets</small>
+            <strong>100% custom built</strong>
+          </div>
+          <div class="stat">
+            <small>Community</small>
+            <strong>OG + new explorers</strong>
+          </div>
+          <div class="stat">
+            <small>Status</small>
+            <strong>Active development</strong>
+          </div>
+        </div>
+      </section>
 
-<!-- The Modal -->
-<div id="privacyModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h2>Privacy Policy</h2>
-    <p><strong>Last updated:</strong> June 1st, 2025</p>
+      <section>
+        <div class="section-header">
+          <h2>Roadmap snapshots</h2>
+          <p>Development moves in tight sprints; here’s what’s happening.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="timeline">
+            <div class="timeline-item">
+              <strong>NOW</strong>
+              <p>Community playtests, physics tuning, bug sweeps.</p>
+            </div>
+            <div class="timeline-item">
+              <strong>NEXT</strong>
+              <p>Traversal gadgets, new biomes, anti-cheat hardening.</p>
+            </div>
+            <div class="timeline-item">
+              <strong>LAUNCH</strong>
+              <p>Featured maps, cosmetics drops, event calendar.</p>
+            </div>
+          </div>
+          <img class="featured-image" src="gameimage1.png" alt="CapuLegacy changelog visual">
+        </div>
+      </section>
 
-    <h3>1. DEFINITIONS</h3>
-    <p>"Oculus/Meta ID": A string that uniquely and consistently identifies a given specific Oculus/Meta account.<br>
-    "IP address" and "IP": Unique string of characters that your device uses to send Internet Protocols.<br>
-    "headset": The device you are running the game on.<br>
-    "I", "we", "us", "our" and “SummerSaltStudios": The developer(s).<br>
-    "services", "game": Games/services developed and published by SummerSaltStudios</p>
+      <section>
+        <div class="section-header">
+          <h2>Systems that keep CapuLegacy running</h2>
+          <p>From PlayFab integrations to safety tooling, everything is wired for longevity.</p>
+        </div>
+        <div class="cta-row">
+          <div class="cta-card">
+            <h3>PlayFab + Raspberry Pi</h3>
+            <p>Lookup your profile securely through your personal Pi proxy.</p>
+            <a class="btn secondary" href="player.html">Open lookup</a>
+          </div>
+          <div class="cta-card">
+            <h3>Moderation stack</h3>
+            <p>Server validation, IP banning, and reporting tools tuned for quick responses.</p>
+          </div>
+          <div class="cta-card">
+            <h3>Community updates</h3>
+            <p>Patch notes, creator calls, and transparent roadmaps keep everyone synced.</p>
+          </div>
+        </div>
+      </section>
 
-    <h3>2. DATA COLLECTION</h3>
-    <p>A. Oculus/Meta ID<br>
-    Your Oculus/Meta ID gets collected by PlayFab to log into your PlayFab/Extinction account.<br><br>
-    B. IP Address<br>
-    Your IP address gets stored on your PlayFab/Extinction account.<br><br>
-    C. Removal of PlayFab/Extinction account<br>
-    If you are unhappy with the data collected and you want your account and all data tied to you deleted, you may contact us as described in Section 6 below.</p>
+      <section>
+        <div class="section-header">
+          <h2>Need to contact LegacyGames?</h2>
+          <p>Pick the inbox for support, partnerships, or policy questions.</p>
+        </div>
+        <div class="contact-list">
+          <div class="contact-item">
+            <h3>Support</h3>
+            <p>Account help, bans, bug reports</p>
+            <a href="mailto:support@legacygames.dev">support@legacygames.dev</a>
+          </div>
+          <div class="contact-item">
+            <h3>Partnerships</h3>
+            <p>Community events & creator outreach</p>
+            <a href="mailto:partners@legacygames.dev">partners@legacygames.dev</a>
+          </div>
+          <div class="contact-item">
+            <h3>Legal & Privacy</h3>
+            <p>Privacy requests, TOS questions</p>
+            <a href="mailto:legacygamezllc@gmail.com">legacygamezllc@gmail.com</a>
+          </div>
+        </div>
+      </section>
+    </main>
 
-    <h3>3. USE OF DATA</h3>
-    <p>A. IP Address<br>
-    As stated in Section 2A, your IP address gets stored on your PlayFab/Extinction account and can only be used for IP bans and other moderation purposes.<br><br>
-    B. Third-party services<br>
-    We do not have any control over our third-party services, if you are interested in knowing more information please read the privacy policy for our third-party services:<br>
-    PlayFab - <a href="https://playfab.com/terms/" target="_blank">https://playfab.com/terms/</a><br>
-    Photon - <a href="https://dashboard.photonengine.com/en/Account/PrivacyAndCookiePolicy" target="_blank">Photon Privacy Policy</a></p>
-
-    <h3>4. CHILDREN’S INFORMATION</h3>
-    <p>The Services are not directed to children under 13, and we do not knowingly collect personal information from children.<br>
-    If you are a parent or guardian and wish to review or delete information collected from your child, you may contact us as described in Section 6 below.</p>
-
-    <h3>5. OTHER PROVISIONS</h3>
-    <p>Third-party websites may link to our Services. We are not responsible for their privacy practices.<br>
-    Supervisory Authority: If you are located in the EEA, Switzerland, the UK or Brazil, you may lodge a complaint with a supervisory authority.<br>
-    We may revise this Privacy Policy at our sole discretion. Continuing to use our Services after updates means you accept the new Privacy Policy.</p>
-
-    <h3>6. CONTACT US</h3>
-    <p>Email: <a href="mailto:summersaltsupport@gmail.com">summersaltsupport@gmail.com</a></p>
+    <footer>
+      CapuLegacy by LegacyGames — Built for the players who loved the original and the ones finding it today.
+    </footer>
   </div>
-</div>
-
-<script>
-function openModal() {
-  const modal = document.getElementById("privacyModal");
-  modal.style.display = "flex";
-  modal.classList.remove("hide");
-  requestAnimationFrame(() => {
-    modal.classList.add("show");
-  });
-}
-
-function closeModal() {
-  const modal = document.getElementById("privacyModal");
-  modal.classList.add("hide");
-  setTimeout(() => {
-    modal.classList.remove("show");
-    modal.classList.remove("hide");
-    modal.style.display = "none";
-  }, 300);
-}
-
-window.onclick = function(event) {
-  const modal = document.getElementById("privacyModal");
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-</script>
 </body>
 </html>

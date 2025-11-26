@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CapuLegacy Player Info | LegacyGames</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header>
+    <div class="page nav">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span>
+        <span>CapuLegacy</span>
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a class="active" href="player.html">Player Info</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page">
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">PlayFab + Raspberry Pi API</p>
+          <h1>Use your own secure endpoint to pull CapuLegacy profile data.</h1>
+          <p class="lead">Point this page at your Pi service that proxies PlayFab. We never see your secret key — everything runs through your endpoint.</p>
+          <div class="actions">
+            <a class="btn primary" href="#player-lookup">Open lookup</a>
+            <a class="btn secondary" href="privacy.html">Privacy policy</a>
+          </div>
+        </div>
+        <img class="featured-image" src="gameimage2.png" alt="CapuLegacy gameplay HUD">
+      </section>
+
+      <section>
+        <div class="section-header">
+          <h2>How it works</h2>
+          <p>Host a small HTTPS API on your Pi, enable CORS, and return JSON to populate the panel.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature">
+            <h3>Endpoint</h3>
+            <p>Example route: <code>/player?userId={id}</code> returning player stats.</p>
+          </div>
+          <div class="feature">
+            <h3>Security</h3>
+            <p>Keep PlayFab secrets on the server; this page only calls your URL.</p>
+          </div>
+          <div class="feature">
+            <h3>CORS + HTTPS</h3>
+            <p>Allow your domain/local file origin and serve over HTTPS for browser trust.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="playfab">
+        <div class="section-header">
+          <h2>Player lookup</h2>
+          <p>Enter your API base and PlayFab ID to load stats in real time.</p>
+        </div>
+        <div class="playfab-wrap">
+          <div class="form">
+            <form id="player-lookup">
+              <label for="apiBase">API endpoint (Pi)</label>
+              <input id="apiBase" name="apiBase" type="url" placeholder="https://raspberrypi.local:3000/api">
+              <label for="playerId">PlayFab Player ID or username</label>
+              <input id="playerId" name="playerId" type="text" placeholder="Enter ID" required>
+              <div class="actions">
+                <button class="btn primary" type="submit">Fetch player profile</button>
+                <button class="btn secondary" type="button" id="demoButton">Use demo data</button>
+              </div>
+              <p class="small">Requests go only to your endpoint; keep server secrets off the client.</p>
+            </form>
+            <div id="status" class="status"></div>
+          </div>
+          <div class="player-card" id="playerCard">
+            <h3 id="playerName">Waiting for lookup</h3>
+            <div class="player-grid">
+              <div class="metric">
+                <span>Level</span>
+                <strong id="playerLevel">–</strong>
+              </div>
+              <div class="metric">
+                <span>XP</span>
+                <strong id="playerXp">–</strong>
+              </div>
+              <div class="metric">
+                <span>Ban status</span>
+                <strong id="playerBan">–</strong>
+              </div>
+              <div class="metric">
+                <span>Last seen</span>
+                <strong id="playerSeen">–</strong>
+              </div>
+            </div>
+            <p class="small" id="playerMeta" style="margin-top: 10px;">Connect above to populate your data.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      CapuLegacy by LegacyGames — Built for the players who loved the original and the ones finding it today.
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const form = document.getElementById('player-lookup');
+      const apiBaseInput = document.getElementById('apiBase');
+      const playerIdInput = document.getElementById('playerId');
+      const statusEl = document.getElementById('status');
+      const demoButton = document.getElementById('demoButton');
+      const playerName = document.getElementById('playerName');
+      const playerLevel = document.getElementById('playerLevel');
+      const playerXp = document.getElementById('playerXp');
+      const playerBan = document.getElementById('playerBan');
+      const playerSeen = document.getElementById('playerSeen');
+      const playerMeta = document.getElementById('playerMeta');
+
+      function setStatus(text, isError) {
+        statusEl.textContent = text || '';
+        statusEl.style.color = isError ? '#ffb4b4' : 'var(--muted)';
+      }
+
+      function renderPlayer(data) {
+        playerName.textContent = data.displayName || 'Unknown player';
+        playerLevel.textContent = data.level ?? '—';
+        playerXp.textContent = data.xp ?? '—';
+        playerBan.textContent = data.banStatus || '—';
+        playerSeen.textContent = data.lastSeen || '—';
+        playerMeta.textContent = data.meta || 'Synced from PlayFab via your API.';
+      }
+
+      async function fetchPlayer(apiBase, playerId) {
+        const url = `${apiBase.replace(/\\/$/, '')}/player?userId=${encodeURIComponent(playerId)}`;
+        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error(`Request failed (${res.status})`);
+        return res.json();
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const apiBase = apiBaseInput.value.trim();
+        const playerId = playerIdInput.value.trim();
+
+        if (!apiBase) {
+          setStatus('Enter your Raspberry Pi API endpoint URL.', true);
+          return;
+        }
+
+        setStatus('Fetching player profile...');
+        try {
+          const payload = await fetchPlayer(apiBase, playerId);
+          const data = payload.player || payload;
+          renderPlayer({
+            displayName: data.DisplayName || data.username || playerId,
+            level: data.Level ?? data.level,
+            xp: data.XP ?? data.xp,
+            banStatus: data.BanStatus || data.banStatus || 'Active',
+            lastSeen: data.LastLogin || data.lastSeen || 'Recently',
+            meta: 'Live data from PlayFab via your endpoint.'
+          });
+          setStatus('Profile updated.');
+        } catch (error) {
+          console.error(error);
+          setStatus('Could not fetch player info. Check the endpoint and CORS on your Pi.', true);
+        }
+      });
+
+      demoButton.addEventListener('click', () => {
+        renderPlayer({
+          displayName: 'CapuExplorer',
+          level: 24,
+          xp: '182,340',
+          banStatus: 'Active',
+          lastSeen: '5m ago',
+          meta: 'Demo data — wire your endpoint to see your real stats.'
+        });
+        setStatus('Showing demo data.');
+      });
+    })();
+  </script>
+</body>
+</html>
